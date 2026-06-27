@@ -79,7 +79,7 @@ func main() {
 	router.Use(cors.New(cors.Config{
 		AllowOrigins:     allowedOrigins,
 		AllowMethods:     []string{"GET", "POST", "OPTIONS"},
-		AllowHeaders:     []string{"Content-Type", "Upgrade", "Connection"},
+		AllowHeaders:     []string{"Content-Type", "Upgrade", "Connection", "x-api-key"},
 		AllowCredentials: true,
 		AllowWildcard:    true,
 	}))
