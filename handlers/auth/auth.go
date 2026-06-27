@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"database/sql"
+	"finsec-backend/utils"
 	"net/http"
 	"net/mail"
 	"strings"
@@ -92,6 +93,10 @@ func Signup(db *sql.DB) gin.HandlerFunc {
 		}
 
 		// TODO: send confirmation/verification email here
+		if err := utils.SendWaitlistEmail(email); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "user created but email failed"})
+			return
+		}
 
 		c.JSON(http.StatusCreated, gin.H{"message": "User registered successfully"})
 	}

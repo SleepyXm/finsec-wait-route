@@ -4,7 +4,6 @@ import (
 	"bytes"
 	_ "embed"
 	"html/template"
-	"net/url"
 
 	"github.com/resend/resend-go/v3"
 )
@@ -18,8 +17,7 @@ func InitResend() {
 //go:embed emails/waitlist.html
 var waitlistHTML string
 
-func SendWaitlistEmail(email, token string) error {
-	confirmURL := "https://devolib.com/waitlist/confirm?token=" + url.QueryEscape(token)
+func SendWaitlistEmail(email string) error {
 
 	tmpl, err := template.New("waitlist").Parse(waitlistHTML)
 	if err != nil {
@@ -28,9 +26,7 @@ func SendWaitlistEmail(email, token string) error {
 
 	var body bytes.Buffer
 
-	err = tmpl.Execute(&body, map[string]string{
-		"ConfirmURL": confirmURL,
-	})
+	err = tmpl.Execute(&body, map[string]string{})
 	if err != nil {
 		return err
 	}
